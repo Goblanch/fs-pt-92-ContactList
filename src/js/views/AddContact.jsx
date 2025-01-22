@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Context } from "../store/appContext";
 import { useNavigate } from "react-router";
 
 const AddContact = () => {
+
+    const { actions } = useContext(Context);
+
+    const [contacInfo, setContactInfo] = useState(null);
 
     const navigate = useNavigate();
 
     const goToHome = () => {
         navigate('/');
     }
+
 
     return (
         <div className="container">
