@@ -32,16 +32,7 @@ const injectContext = PassedComponent => {
 			 *
 			 **/
 
-			const testContact = {
-				name: "Gonzalo",
-				phone: "1234",
-				email: "example@example.com",
-				address: "Calle calle 2",
-				id: 0
-			}
-
-			console.log(state.actions.getContacts("goblanch"));
-			console.log(state.actions.deleteContact("goblanch", 17));
+			state.actions.getContacts();
 
 		}, []);
 

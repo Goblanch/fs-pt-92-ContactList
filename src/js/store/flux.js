@@ -1,115 +1,113 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			],
-
-			contacts: []
+			contactList: []
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				console.log("HOLA");
-				getActions().changeColor(0, "green");
-			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			},
-
-			getContacts: async (slug) => {
+			getContacts: async () => {
 				try {
-					const response = await fetch(`https://playground.4geeks.com/contact/agendas/${slug}`);
+					const response = await fetch("https://playground.4geeks.com/contact/agendas/goblanch/contacts");
 					if (!response.ok) {
-						const errorData = await response.json();
-						const agenda = await getActions().createAgenda(slug);
-						return agenda;
+						getActions().createAgenda();
+						return;
 					}
 
 					const fetchData = await response.json();
-					console.log(fetchData);
+
+					if (fetchData) setStore({ contactList: fetchData.contacts });
+
 					return fetchData;
 
 				} catch (error) {
-					console.log(`[getContacts]: ${error} Creating new agenda with slug ${slug}`);
+					console.log(error);
 				}
 			},
 
-			createAgenda: async (slug) => {
+			createAgenda: async () => {
 				try {
-					const response = await fetch(`https://playground.4geeks.com/contact/agendas/${slug}`, {
-						method: "POST"
+					const response = await fetch("https://playground.4geeks.com/contact/agendas/goblanch", {
+						method: "POST",
 					})
 
-					if (!response.ok) throw new Error("Couldn't create new agenda");
+					if (!response.ok) throw new Error(response.statusText);
 
 					const fetchData = await response.json();
 					console.log(fetchData);
-					return fetchData;
 
-				} catch (error) {
+				} catch (errpr) {
 					console.log(error);
 				}
 			},
 
-			addContact: async (slug, contact) => {
-				//getStore.contacts.push(contact);
+			addContact: (contact) => {
+				const store = getStore();
+				setStore({ ...store, contactList: [...store.contactList, contact] });
+			},
 
+			createContact: async (contact) => {
 				try {
-
-					const response = await fetch(`https://playground.4geeks.com/contact/agendas/${slug}/contacts`, {
+					fetch("https://playground.4geeks.com/contact/agendas/goblanch/contacts", {
 						method: "POST",
-						body: JSON.stringify(contact),
 						headers: {
-							"Content-Type": "application/json"
-						}
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(payload),
 					})
 
 					if (!response.ok) throw new Error(response.statusText);
 
-					getActions().getContacts();
+					const fetchData = await response.json();
+					console.log(fetchData);
+					const actions = getActions();
+					actions.addContact(fetchData);
+				} catch (error) {
+					console.log(error);
+				}
+			},
+
+			deleteContact: async (id) => {
+				try {
+					const response = await fetch(`https://playground.4geeks.com/contact/agendas/goblanch/contacts/${id}`, {
+						method: "DELETE",
+					})
+
+					if (!response.ok) throw new Error(response.statusText);
+
+					const store = getStore();
+					const newContactList = store.contactList.filter(contact => contact.id !== id);
+					setStore({ contactList: newContactList });
 
 				} catch (error) {
 					console.log(error);
 				}
 			},
 
-			deleteContact: async (slug, id) => {
+			editContact: async (id, contacy) => {
 				try {
 
-					const response = await fetch(`https://playground.4geeks.com/contact/agendas/${slug}/contacts/${id}`, {
-						method: "DELETE",
+					const response = fetch(`https://playground.4geeks.com/contact/agendas/goblanch/contacts/${id}`, {
+						method: "PUT",
 						headers: {
-							"Content-Type": "application/json"
-						}
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(contact)
 					})
 
 					if (!response.ok) throw new Error(response.statusText);
+
+					const fetchData = await response.json();
+
+					if (fetchData) {
+						const newContactList = store.contactList.map(contact => {
+							if (contact.id == id) {
+								contact = fetchData;
+							}
+						})
+
+						setStore({ contactList: newContactList });
+					}
+
+					return fetchData;
 
 				} catch (error) {
 					console.log(error);
