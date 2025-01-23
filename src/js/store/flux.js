@@ -46,12 +46,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			createContact: async (contact) => {
 				try {
-					fetch("https://playground.4geeks.com/contact/agendas/goblanch/contacts", {
+					const response = await fetch("https://playground.4geeks.com/contact/agendas/goblanch/contacts", {
 						method: "POST",
 						headers: {
 							'Content-Type': 'application/json'
 						},
-						body: JSON.stringify(payload),
+						body: JSON.stringify(contact),
 					})
 
 					if (!response.ok) throw new Error(response.statusText);
@@ -82,7 +82,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			editContact: async (id, contacy) => {
+			editContact: async (id, contact) => {
 				try {
 
 					const response = fetch(`https://playground.4geeks.com/contact/agendas/goblanch/contacts/${id}`, {

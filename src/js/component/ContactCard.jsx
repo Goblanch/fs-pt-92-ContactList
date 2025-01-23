@@ -1,23 +1,23 @@
 import React from "react";
 import profilePic from "../../img/rigo-baby.jpg"
 
-const ContactCard = () => {
+const ContactCard = (props) => {
     return (
         <div className="container d-flex border p-2">
             <img src={profilePic} className="img-fluid" />
             <div className="ms-3 align-self-center">
-                <h4 className="text mb-3">Name</h4>
+                <h4 className="text mb-3">{props.contact.name}</h4>
                 <div className="d-flex">
                     <i className="fa-solid fa-location-dot me-2"></i>
-                    <p className="align-self-center"><b>Direction</b></p>
+                    <p className="align-self-center"><b>{props.contact.address}</b></p>
                 </div>
                 <div className="d-flex">
                     <i className="fa-solid fa-phone me-2"></i>
-                    <p className="align-self-center">Phone Number</p>
+                    <p className="align-self-center">{props.contact.phone}</p>
                 </div>
                 <div className="d-flex">
                     <i class="fa-solid fa-envelope me-2 mt-1"></i>
-                    <p className="align-self-center">Mail</p>
+                    <p className="align-self-center">{props.contact.email}</p>
                 </div>
             </div>
             <div className="d-flex align-items-start ms-auto me-2">
