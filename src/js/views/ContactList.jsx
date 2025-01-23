@@ -22,7 +22,7 @@ const ContactList = () => {
 
     return (
         <div className="container mt-4 d-flex flex-column">
-            <button onClick={goToAddContact} className="btn btn-success ms-auto me-0 mb-3">Add Contact</button>
+            <button onClick={goToAddContact} className="btn btn-success ms-auto me-3 mb-3">Add Contact</button>
             <div className="container">
                 <ul>
                     {store.contactList.map((contact, index) => (

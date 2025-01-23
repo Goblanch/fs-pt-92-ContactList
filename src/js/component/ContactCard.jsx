@@ -12,30 +12,37 @@ const ContactCard = (props) => {
     }
 
     return (
-        <div className="container d-flex border p-2">
-            <img src={profilePic} className="img-fluid" />
-            <div className="ms-3 align-self-center">
-                <h4 className="text mb-3">{props.contact.name}</h4>
-                <div className="d-flex">
-                    <i className="fa-solid fa-location-dot me-2"></i>
-                    <p className="align-self-center"><b>{props.contact.address}</b></p>
+        <div className="container border p-2 mb-3">
+            <div className="row">
+                {/* Imagen */}
+                <div className="col-12 col-md-3 text-center mb-3 mb-md-0">
+                    <img src={profilePic} className="img-fluid rounded-circle" alt="Profile" />
                 </div>
-                <div className="d-flex">
-                    <i className="fa-solid fa-phone me-2"></i>
-                    <p className="align-self-center">{props.contact.phone}</p>
+                {/* Información */}
+                <div className="col-12 col-md-6 ms-3">
+                    <h4 className="text mb-3">{props.contact.name}</h4>
+                    <div className="d-flex align-items-center mb-2">
+                        <i className="fa-solid fa-location-dot me-2"></i>
+                        <p className="mb-0">{props.contact.address}</p>
+                    </div>
+                    <div className="d-flex align-items-center mb-2">
+                        <i className="fa-solid fa-phone me-2"></i>
+                        <p className="mb-0">{props.contact.phone}</p>
+                    </div>
+                    <div className="d-flex align-items-center mb-2">
+                        <i className="fa-solid fa-envelope me-2"></i>
+                        <p className="mb-0">{props.contact.email}</p>
+                    </div>
                 </div>
-                <div className="d-flex">
-                    <i class="fa-solid fa-envelope me-2 mt-1"></i>
-                    <p className="align-self-center">{props.contact.email}</p>
+                {/* Botones */}
+                <div className="col-md-12 col-3 d-flex justify-content-center justify-content-md-end align-items-start">
+                    <Link to={"/editContact/" + props.contact.id} className="btn  m-1">
+                        <i className="fa-solid fa-pencil"></i>
+                    </Link>
+                    <button className="btn m-1" onClick={deleteContact}>
+                        <i className="fa-solid fa-trash-can"></i>
+                    </button>
                 </div>
-            </div>
-            <div className="d-flex align-items-start ms-auto me-2">
-                <Link to={"/editContact/" + props.contact.id} className="btn m-2">
-                    <i className="fa-solid fa-pencil"></i>
-                </Link>
-                <button className="btn m-2" onClick={deleteContact}>
-                    <i className="fa-solid fa-trash-can"></i>
-                </button>
             </div>
         </div>
     );
