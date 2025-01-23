@@ -18,8 +18,10 @@ const Layout = () => {
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
 					<Routes>
-						<Route path="/" element={<ContactList/>} />
-						<Route path="/AddContact" element={<AddContact />} />
+						<Route path="/" element={<ContactList />} />
+						<Route path="/addContact" element={<AddContact />} />
+						<Route path="/editContact/:id" element={<AddContact />} />
+						<Route path="*" element={<h1>Page not found</h1>} />
 					</Routes>
 				</ScrollToTop>
 			</BrowserRouter>

@@ -14,13 +14,19 @@ const ContactList = () => {
         navigate('/AddContact');
     }
 
+    useEffect(() => {
+
+        actions.getContacts();
+
+    }, [store.contactList])
+
     return (
         <div className="container mt-4 d-flex flex-column">
             <button onClick={goToAddContact} className="btn btn-success ms-auto me-0 mb-3">Add Contact</button>
             <div className="container">
                 <ul>
                     {store.contactList.map((contact, index) => (
-                        <li>
+                        <li className="list-group mb-2">
                             <ContactCard contact={contact} key={index} />
                         </li>
                     ))}

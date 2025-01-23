@@ -60,6 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(fetchData);
 					const actions = getActions();
 					actions.addContact(fetchData);
+					console.log(getStore().contactList);
 				} catch (error) {
 					console.log(error);
 				}

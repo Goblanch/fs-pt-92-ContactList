@@ -38,23 +38,26 @@ const AddContact = () => {
             actions.editContact(id, contact);
         }
 
+        goToHome();
+
     }
 
     useEffect(() => {
 
-        if (id && store.contactList > 0) {
+        if (id) {
             const contactToShow = store.contactList.find(contact => contact.id == id);
+            console.log(contactToShow);
             setName(contactToShow.name);
             setAddress(contactToShow.address);
             setPhone(contactToShow.phone);
             setEmail(contactToShow.email);
         }
 
-    }, [id, store.contactList])
+    }, [id])
 
     return (
         <div className="container">
-            <h1 className="text text-center mx-auto">Add a new Contact</h1>
+            <h1 className="text text-center mx-auto">{!id ? "Add New Contact" : `Edit Contact: ${name}`}</h1>
             <form onSubmit={saveContact}>
                 <div className="mb-2">
                     <label className="form-label"><strong>Full Name</strong></label>

@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from '../store/appContext'
+import { Link } from "react-router-dom";
 import profilePic from "../../img/rigo-baby.jpg"
 
 const ContactCard = (props) => {
+
+    const { store, actions } = useContext(Context);
+
+    const deleteContact = () => {
+        actions.deleteContact(props.contact.id);
+    }
+
     return (
         <div className="container d-flex border p-2">
             <img src={profilePic} className="img-fluid" />
@@ -21,10 +30,10 @@ const ContactCard = (props) => {
                 </div>
             </div>
             <div className="d-flex align-items-start ms-auto me-2">
-                <button className="btn m-2">
+                <Link to={"/editContact/" + props.contact.id} className="btn m-2">
                     <i className="fa-solid fa-pencil"></i>
-                </button>
-                <button className="btn m-2">
+                </Link>
+                <button className="btn m-2" onClick={deleteContact}>
                     <i className="fa-solid fa-trash-can"></i>
                 </button>
             </div>
